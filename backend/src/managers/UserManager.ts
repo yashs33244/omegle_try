@@ -57,18 +57,17 @@ export class UserManager {
     }
 
     initHandlers(socket: Socket) {
-        socket.on("offer", ({ sdp, roomId }: { sdp: string, roomId: string }) => {
-          this.roomManager.onOffer(roomId, sdp, socket.id);
+        socket.on("offer", ({sdp, roomId}: {sdp: string, roomId: string}) => {
+            this.roomManager.onOffer(roomId, sdp, socket.id);
+        })
+
+        socket.on("answer",({sdp, roomId}: {sdp: string, roomId: string}) => {
+            this.roomManager.onAnswer(roomId, sdp, socket.id);
+        })
+
+        socket.on("add-ice-candidate", ({candidate, roomId, type}) => {
+            this.roomManager.onIceCandidates(roomId, socket.id, candidate, type);
         });
-      
-        socket.on("answer", ({ sdp, roomId }: { sdp: string, roomId: string }) => {
-          this.roomManager.onAnswer(roomId, sdp, socket.id);
-        });
-      
-        socket.on("add-ice-candidate", ({ candidate, roomId, type }: { candidate: RTCIceCandidate, roomId: string, type: "sender" | "receiver" }) => {
-          console.log("Received ICE candidate", { roomId, type });
-          this.roomManager.onIceCandidates(roomId, socket.id, candidate, type);
-        });
-      }
+    }
 
 }
