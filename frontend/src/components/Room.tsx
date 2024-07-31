@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Socket, io } from "socket.io-client";
 
-const URL = "https://omegleback-noomiy9rl-yashs33244s-projects.vercel.app";
+const URL = "https://omegle-try.onrender.com";
 
 export const Room = ({
   name,
