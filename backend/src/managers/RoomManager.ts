@@ -54,14 +54,14 @@ export class RoomManager {
         });
     }
 
-    onIceCandidates(roomId: string, senderSocketid: string, candidate: any, type: "sender" | "receiver") {
+    onIceCandidates(roomId: string, senderSocketid: string, candidate: RTCIceCandidate, type: "sender" | "receiver") {
         const room = this.rooms.get(roomId);
         if (!room) {
-            return;
+          return;
         }
-        const receivingUser = room.user1.socket.id === senderSocketid ? room.user2: room.user1;
-        receivingUser.socket.emit("add-ice-candidate", ({candidate, type}));
-    }
+        const receivingUser = room.user1.socket.id === senderSocketid ? room.user2 : room.user1;
+        receivingUser.socket.emit("add-ice-candidate", { candidate, type, roomId });
+      }
 
     generate() {
         return GLOBAL_ROOM_ID++;
