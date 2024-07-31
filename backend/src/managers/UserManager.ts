@@ -66,6 +66,7 @@ export class UserManager {
         });
       
         socket.on("add-ice-candidate", ({ candidate, roomId, type }: { candidate: RTCIceCandidate, roomId: string, type: "sender" | "receiver" }) => {
+          console.log("Received ICE candidate", { roomId, type });
           this.roomManager.onIceCandidates(roomId, socket.id, candidate, type);
         });
       }
