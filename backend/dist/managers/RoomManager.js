@@ -41,7 +41,7 @@ class RoomManager {
             roomId
         });
     }
-    onIceCandidate(roomId, senderSocketid, candidate, type) {
+    onIceCandidates(roomId, senderSocketid, candidate, type) {
         const room = this.rooms.get(roomId);
         if (!room) {
             return;

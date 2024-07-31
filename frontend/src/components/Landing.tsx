@@ -16,7 +16,6 @@ export const Landing = () => {
       video: true,
       audio: true,
     });
-    // MediaStream
     const audioTrack = stream.getAudioTracks()[0];
     const videoTrack = stream.getVideoTracks()[0];
     setLocalAudioTrack(audioTrack);
@@ -26,7 +25,6 @@ export const Landing = () => {
     }
     videoRef.current.srcObject = new MediaStream([videoTrack]);
     videoRef.current.play();
-    // MediaStream
   };
 
   useEffect(() => {
@@ -37,18 +35,21 @@ export const Landing = () => {
 
   if (!joined) {
     return (
-      <div>
-        <video autoPlay ref={videoRef}></video>
+      <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 p-6">
+        <video
+          className="w-full max-w-md rounded-lg shadow-lg mb-4"
+          autoPlay
+          ref={videoRef}
+        ></video>
         <input
           type="text"
-          onChange={(e) => {
-            setName(e.target.value);
-          }}
-        ></input>
+          placeholder="Enter your name"
+          onChange={(e) => setName(e.target.value)}
+          className="mb-4 p-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+        />
         <button
-          onClick={() => {
-            setJoined(true);
-          }}
+          onClick={() => setJoined(true)}
+          className="px-4 py-2 bg-blue-500 text-white rounded-lg shadow-md hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500"
         >
           Join
         </button>

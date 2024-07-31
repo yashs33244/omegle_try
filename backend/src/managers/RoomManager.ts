@@ -54,7 +54,7 @@ export class RoomManager {
         });
     }
 
-    onIceCandidate(roomId: string, senderSocketid: string, candidate: any, type: "sender" | "receiver") {
+    onIceCandidates(roomId: string, senderSocketid: string, candidate: any, type: "sender" | "receiver") {
         const room = this.rooms.get(roomId);
         if (!room) {
             return;

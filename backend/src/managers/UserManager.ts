@@ -50,7 +50,7 @@ export class UserManager {
         if (!user1 || !user2) {
             return;
         }
-        console.log("creating room");
+        console.log("creating roonm");
 
         const room = this.roomManager.createRoom(user1, user2);
         this.clearQueue();
@@ -66,7 +66,7 @@ export class UserManager {
         })
 
         socket.on("add-ice-candidate", ({candidate, roomId, type}) => {
-            this.roomManager.onIceCandidate(roomId, socket.id, candidate, type);
+            this.roomManager.onIceCandidates(roomId, socket.id, candidate, type);
         });
     }
 

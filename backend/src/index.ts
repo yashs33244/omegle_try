@@ -1,35 +1,30 @@
-// @ts-ignore
-import {Socket} from "socket.io";   
-import http from "http";    
+import { Socket } from "socket.io";
+import http from "http";
 
-import express from "express"; 
-// @ts-ignore
-import {Server} from "socket.io";
-// @ts-ignore
-import {UserManager} from "./managers/UserManager";  
+import express from 'express';
+import { Server } from 'socket.io';
+import { UserManager } from "./managers/UserManager";
 
-const app = express();  
-const server = http.createServer(app); 
+const app = express();
+const server = http.createServer(http);
 
-const io = new Server(server,{
-    cors:{
-        origin:"*"
-    }
-})
+const io = new Server(server, {
+  cors: {
+    origin: "*"
+  }
+});
 
-const userManager = new UserManager();  
+const userManager = new UserManager();
 
-io.on("connection", (socket: Socket) => {
-    console.log("a user connected");
-    userManager.addUser("random Name", socket);
+io.on('connection', (socket: Socket) => {
+  console.log('a user connected');
+  userManager.addUser("randomName", socket);
+  socket.on("disconnect", () => {
+    console.log("user disconnected");
+    userManager.removeUser(socket.id);
+  })
+});
 
-    // on disconnect
-    socket.on("disconnect", () => {
-        console.log("user disconnected");
-        userManager.removeUser(socket.id); 
-    });
-})
-
-server.listen(3000,()=>{
-    console.log("Server is running on port 3000");  
-})
+server.listen(3000, () => {
+    console.log('listening on *:3000');
+});
