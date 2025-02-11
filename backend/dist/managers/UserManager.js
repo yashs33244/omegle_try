@@ -36,18 +36,21 @@ class UserManager {
         if (!user1 || !user2) {
             return;
         }
-        console.log("creating roonm");
+        console.log("creating room");
         const room = this.roomManager.createRoom(user1, user2);
         this.clearQueue();
     }
     initHandlers(socket) {
         socket.on("offer", ({ sdp, roomId }) => {
+            console.log("Received offer from:", socket.id);
             this.roomManager.onOffer(roomId, sdp, socket.id);
         });
         socket.on("answer", ({ sdp, roomId }) => {
+            console.log("Received answer from:", socket.id);
             this.roomManager.onAnswer(roomId, sdp, socket.id);
         });
         socket.on("add-ice-candidate", ({ candidate, roomId, type }) => {
+            console.log("Received ICE candidate from:", socket.id);
             this.roomManager.onIceCandidates(roomId, socket.id, candidate, type);
         });
     }

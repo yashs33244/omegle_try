@@ -12,6 +12,7 @@ class RoomManager {
             user1,
             user2,
         });
+        console.log("Created room with ID:", roomId);
         user1.socket.emit("send-offer", {
             roomId
         });
@@ -22,6 +23,7 @@ class RoomManager {
     onOffer(roomId, sdp, senderSocketid) {
         const room = this.rooms.get(roomId);
         if (!room) {
+            console.log("Room not found for ID:", roomId);
             return;
         }
         const receivingUser = room.user1.socket.id === senderSocketid ? room.user2 : room.user1;
@@ -33,6 +35,7 @@ class RoomManager {
     onAnswer(roomId, sdp, senderSocketid) {
         const room = this.rooms.get(roomId);
         if (!room) {
+            console.log("Room not found for ID:", roomId);
             return;
         }
         const receivingUser = room.user1.socket.id === senderSocketid ? room.user2 : room.user1;
@@ -44,6 +47,7 @@ class RoomManager {
     onIceCandidates(roomId, senderSocketid, candidate, type) {
         const room = this.rooms.get(roomId);
         if (!room) {
+            console.log("Room not found for ID:", roomId);
             return;
         }
         const receivingUser = room.user1.socket.id === senderSocketid ? room.user2 : room.user1;

@@ -18,32 +18,36 @@ export class RoomManager {
         this.rooms.set(roomId.toString(), {
             user1, 
             user2,
-        })
+        });
+
+        console.log("Created room with ID:", roomId);
 
         user1.socket.emit("send-offer", {
             roomId
-        })
+        });
 
         user2.socket.emit("send-offer", {
             roomId
-        })
+        });
     }
 
     onOffer(roomId: string, sdp: string, senderSocketid: string) {
         const room = this.rooms.get(roomId);
         if (!room) {
+            console.log("Room not found for ID:", roomId);
             return;
         }
         const receivingUser = room.user1.socket.id === senderSocketid ? room.user2: room.user1;
         receivingUser?.socket.emit("offer", {
             sdp,
             roomId
-        })
+        });
     }
     
     onAnswer(roomId: string, sdp: string, senderSocketid: string) {
         const room = this.rooms.get(roomId);
         if (!room) {
+            console.log("Room not found for ID:", roomId);
             return;
         }
         const receivingUser = room.user1.socket.id === senderSocketid ? room.user2: room.user1;
@@ -57,6 +61,7 @@ export class RoomManager {
     onIceCandidates(roomId: string, senderSocketid: string, candidate: any, type: "sender" | "receiver") {
         const room = this.rooms.get(roomId);
         if (!room) {
+            console.log("Room not found for ID:", roomId);
             return;
         }
         const receivingUser = room.user1.socket.id === senderSocketid ? room.user2: room.user1;
@@ -66,5 +71,4 @@ export class RoomManager {
     generate() {
         return GLOBAL_ROOM_ID++;
     }
-
 }
